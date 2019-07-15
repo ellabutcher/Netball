@@ -1,2 +1,2 @@
-# Netball World Cup 
-A python Program for reading netball results
+# Netball World Cup
+A python program for reading netball results
