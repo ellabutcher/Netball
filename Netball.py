@@ -4,7 +4,7 @@ import requests
 from bs4 import BeautifulSoup
 
 
-def print_gather_results(html_content):
+def gather_results(html_content):
     soup = BeautifulSoup(html_content,features="html.parser")
     teambox_list = soup.select('#option2 .teambox')
     results_list = []
@@ -20,20 +20,28 @@ def print_gather_results(html_content):
         result.append(team2[0].get_text())
         result.append(team2_score)
         results_list.append(result)
-    
+    return results_list
 
 
-    print(results_list)
+def print_results(team_name, results_list):
+    for team_name in results_list:
+        if team1 or team2 is "England":
+            print(results_list)
+        else:
+            print_results
+
 
 
 def get_netball_results_page():
-    page = requests.get("https://www.nwc2019.co.uk/competition-hub")
+    page = requests.get("https://www.nwc2019.co.uk/competition-hub/")
     return page
 
 
 def main():
     netballpage = get_netball_results_page()
-    print_gather_results(netballpage.content)
+    results = gather_results(netballpage.content)
+    print_results("England", results)
+    
 
 
 if __name__ == "__main__":
