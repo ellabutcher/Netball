@@ -32,16 +32,18 @@ def print_results(team_name, results_list):
         
 
 def gather_historic_results(team_name, years):
+    print("Gathering historic results...")
     results = []
     months = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
     for year in range(2019, 2019 - years, -1):
+        print("[" + str(year) + "]")
         for month in months:
             url = "https://www.skysports.com/netball/results/" +month +"-" + str(year)
-            #scrape_sky_results(url, results)
-    scrape_sky_results("https://www.skysports.com/netball/results/August-2015", results)
+            scrape_sky_results(url, results)
     print (results)
 
 def scrape_sky_results(url, results_list):
+    print("Loading: " + url)
     page = requests.get(url)
     soup = BeautifulSoup(page.content,features="html.parser")
     match_results = soup.select('.matches__list-item')
@@ -49,7 +51,6 @@ def scrape_sky_results(url, results_list):
         result = []
         scores = match.select(".matches__teamscores-side")
         teams = match.select(".swap-text__target")
-        print (teams[0].text)
         result.append(teams[0].text)
         result.append(int(scores[0].text))
         result.append(teams[1].text)
